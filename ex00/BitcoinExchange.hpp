@@ -6,21 +6,22 @@
 /*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 12:10:08 by jkollner          #+#    #+#             */
-/*   Updated: 2024/03/04 18:29:16 by jonahkollne      ###   ########.fr       */
+/*   Updated: 2024/03/05 14:55:07 by jonahkollne      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-#include <unordered_map>
+#include <map>
 #include <string>
+#include <fstream>
 
 class BitcoinExchange {
 	private:
-		std::unordered_map<std::string, double>	_exchangeRate;
+		std::map<std::string, double>	_exchangeRate;
 		bool isValidDate(std::string date);
 		// Read the database
 		std::pair<std::string, double> isValidData(std::string data_line, char delimiter); // returns a pair of the currency and the exchange rate or throws exception
-		std::unordered_map<std::string, double> readDatabase(std::string database_file);
+		std::map<std::string, double> readDatabase(std::string database_file);
 
 	public:
 		BitcoinExchange();
@@ -45,7 +46,7 @@ class BitcoinExchange {
 				virtual const char *what() const throw();
 		};
 
-		class OutOfNumber : public std::exception {
+		class NoNumber : public std::exception {
 			public:
 				virtual const char *what() const throw();
 		};
