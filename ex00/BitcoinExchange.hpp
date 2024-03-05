@@ -6,7 +6,7 @@
 /*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 12:10:08 by jkollner          #+#    #+#             */
-/*   Updated: 2024/03/05 14:55:07 by jonahkollne      ###   ########.fr       */
+/*   Updated: 2024/03/05 18:08:37 by jonahkollne      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <map>
 #include <string>
 #include <fstream>
+
+#include <iostream>
 
 class BitcoinExchange {
 	private:
@@ -35,10 +37,11 @@ class BitcoinExchange {
 
 		class InvalidDateException : public std::exception {
 			private:
-				std::string date;
+				char *date;
 			public:
-				InvalidDateException(std::string date);
+				InvalidDateException(char * date);
 				virtual const char *what() const throw();
+				//virtual ~InvalidDateException() throw();
 		};
 
 		class NegativeNumber : public std::exception {
