@@ -28,7 +28,9 @@ template <typename T>
 std::chrono::duration<double, std::nano> PmergeMe<T>::sort(T &data) {
 	T second_data;
 	std::chrono::time_point<std::chrono::high_resolution_clock> start = std::chrono::high_resolution_clock::now();
+
 	second_data = split_data(data);
+
 	std::chrono::time_point<std::chrono::high_resolution_clock> end = std::chrono::high_resolution_clock::now();
 	for (size_t i = 0; i < data.size(); i++) {
 		std::cout << data[i] << " ";
@@ -36,6 +38,11 @@ std::chrono::duration<double, std::nano> PmergeMe<T>::sort(T &data) {
 	std::cout << std::endl;
 	for (size_t i = 0; i < second_data.size(); i++) {
 		std::cout << second_data[i] << " ";
+	}
+	std::cout << std::endl;
+
+	for (size_t i = 0; i < second_data.size(); i++) {
+		std::cout << nth_jacob(i) << " ";
 	}
 	std::cout << std::endl;
 	return std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
@@ -68,6 +75,22 @@ void PmergeMe<T>::merge_data(T &data1, T &data2) {
 	(void)data1;
 	(void)data2;
 
+}
+template <typename T>
+int PmergeMe<T>::nth_jacob(int n) {
+	int prev1 = 0;
+	int prev2 = 1;
+
+	if (n == 0)
+		return prev1;
+	else if (n == 1)
+		return prev2;
+	for (int i = 2; i <= n; i++) {
+		int current = prev2 + 2 * prev1;
+		prev1 = prev2;
+		prev2 = current;
+	}
+	return (prev2);
 }
 
 // Explicit template instantiation

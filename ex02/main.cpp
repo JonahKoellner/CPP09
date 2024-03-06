@@ -6,12 +6,11 @@
 /*   By: jkollner <jkollner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:20:54 by jkollner          #+#    #+#             */
-/*   Updated: 2024/03/06 13:28:39 by jkollner         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:53:50 by jkollner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "PmergeMe.hpp"
-#include <iostream>
+#include "main.hpp"
 
 int main(int argc, char **argv) {
 	(void)argc;
@@ -27,5 +26,6 @@ int main(int argc, char **argv) {
 	PmergeMe<std::vector<int> > pmerge;
 	std::chrono::duration<double, std::nano> time = pmerge.sort(data);
 	std::cout << "Time taken to sort: " << time.count() << " nanoseconds" << std::endl;
+	
 	return 0;
 }

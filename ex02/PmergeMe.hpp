@@ -6,7 +6,7 @@
 /*   By: jkollner <jkollner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 09:43:45 by jkollner          #+#    #+#             */
-/*   Updated: 2024/03/06 13:23:43 by jkollner         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:54:24 by jkollner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ class PmergeMe {
 		~PmergeMe();
 		PmergeMe &operator=(PmergeMe const &rhs);
 		std::chrono::duration<double, std::nano> sort(T &data); // returns the time taken for the sort
+		int nth_jacob(int n); // returns the nth jacob number
 		//T getData();
 };
