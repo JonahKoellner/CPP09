@@ -1,81 +1,21 @@
-// PmergeMe.cpp
 #include "PmergeMe.hpp"
 
-
 template <typename T>
-PmergeMe<T>::PmergeMe() {
-	// Constructor implementation...
-}
+PmergeMe<T>::PmergeMe() {}
 
 template <typename T>
 PmergeMe<T>::PmergeMe(PmergeMe const &src) {
-	(void)src;
-	// Copy constructor implementation...
-}
-
-template <typename T>
-PmergeMe<T>::~PmergeMe() {
-	// Destructor implementation...
+	this->_last_bench = src._last_bench;
 }
 
 template <typename T>
 PmergeMe<T>& PmergeMe<T>::operator=(PmergeMe const &rhs) {
-	(void)rhs;
+	if (this != &rhs) {
+		this->_last_bench = rhs._last_bench;
+	}
 	return *this;
 }
 
-template <typename T>
-std::chrono::duration<double, std::nano> PmergeMe<T>::sort(T &data) {
-	T second_data;
-	std::chrono::time_point<std::chrono::high_resolution_clock> start = std::chrono::high_resolution_clock::now();
-
-	second_data = split_data(data);
-
-	std::chrono::time_point<std::chrono::high_resolution_clock> end = std::chrono::high_resolution_clock::now();
-	for (size_t i = 0; i < data.size(); i++) {
-		std::cout << data[i] << " ";
-	}
-	std::cout << std::endl;
-	for (size_t i = 0; i < second_data.size(); i++) {
-		std::cout << second_data[i] << " ";
-	}
-	std::cout << std::endl;
-
-	for (size_t i = 0; i < second_data.size(); i++) {
-		std::cout << nth_jacob(i) << " ";
-	}
-	std::cout << std::endl;
-	return std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
-}
-
-template <typename T>
-T PmergeMe<T>::split_data(T &data) {
-	// split_data method implementation...
-	T second_data;
-	size_t count = 0;
-	typename T::iterator it = data.begin();
-	while (it != data.end()) {
-		if (count % 2 == 0) {
-			second_data.push_back(*it);
-			it = data.erase(it);
-		}
-		else {
-			++it;
-		}
-		++count;
-	}
-
-	return second_data;
-	(void)data;
-}
-
-template <typename T>
-void PmergeMe<T>::merge_data(T &data1, T &data2) {
-	// merge_data method implementation...
-	(void)data1;
-	(void)data2;
-
-}
 template <typename T>
 int PmergeMe<T>::nth_jacob(int n) {
 	int prev1 = 0;
@@ -91,6 +31,43 @@ int PmergeMe<T>::nth_jacob(int n) {
 		prev2 = current;
 	}
 	return (prev2);
+}
+
+template <typename T>
+T PmergeMe<T>::sort(T data) {
+	std::chrono::time_point<std::chrono::system_clock> start, end;
+	start = std::chrono::system_clock::now();
+
+	if (safeguard_catch(data)) // if its an "error" where i just dont have anything to sort return 1; if its a real error throw an exception
+		return (data);
+	int struggler;
+	if (data.size() % 2 != 0) {
+		struggler = data.back();
+		data.pop_back();
+	}
+	else
+		struggler = -1;
+	T<std::pair<int, int> > halves = this->split(data);
+	sort_pairs(halves);
+	std::pair<T, T> splitted = this->split_chain(halves);
+	data = this->merge(splitted);
+	// if there was a struggler, put it back in
+	if (struggler != -1)
+		insert_struggler(data, struggler);
+
+	end = std::chrono::system_clock::now();
+	this->_last_bench = end - start;
+	return (data);
+}
+
+template <typename T>
+std::chrono::duration<double, std::nano> PmergeMe<T>::get_last_bench() {
+	return this->_last_bench;
+}
+
+template <typename T>
+PmergeMe<T>::~PmergeMe() {
+	// Destructor implementation...
 }
 
 // Explicit template instantiation

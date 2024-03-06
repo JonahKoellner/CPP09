@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkollner <jkollner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 09:43:45 by jkollner          #+#    #+#             */
-/*   Updated: 2024/03/06 15:54:24 by jkollner         ###   ########.fr       */
+/*   Updated: 2024/03/06 20:35:33 by jonahkollne      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,13 @@
 template <typename T>
 class PmergeMe {
 	private:
-		T split_data(T &data); // returns the second data pair set. also changes the first data pair set
-		void merge_data(T &data1, T &data2); // merges the two data pair sets into data1
+		std::chrono::duration<double, std::nano> _last_bench;
+		int nth_jacob(int n); // returns the nth jacob number
 	public:
 		PmergeMe();
 		PmergeMe(PmergeMe const &src);
 		~PmergeMe();
 		PmergeMe &operator=(PmergeMe const &rhs);
-		std::chrono::duration<double, std::nano> sort(T &data); // returns the time taken for the sort
-		int nth_jacob(int n); // returns the nth jacob number
-		//T getData();
+		T sort(T data); // returns the sorted data
+		std::chrono::duration<double, std::nano> get_last_bench(); // returns the time for the last sort
 };
