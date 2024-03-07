@@ -5,28 +5,39 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 09:43:45 by jkollner          #+#    #+#             */
-/*   Updated: 2024/03/06 20:35:33 by jonahkollne      ###   ########.fr       */
+/*   Created: 2024/03/07 17:16:17 by jonahkollne       #+#    #+#             */
+/*   Updated: 2024/03/07 21:08:18 by jonahkollne      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-#include <chrono>
-#include <algorithm> // for std::sort
 #include <vector>
 #include <deque>
-#include <iostream>
-
-template <typename T>
 class PmergeMe {
 	private:
-		std::chrono::duration<double, std::nano> _last_bench;
-		int nth_jacob(int n); // returns the nth jacob number
+		double _benchmark;
+
+		template <typename T, template <typename, typename> class Container>
+		Container<std::pair<int, int>, std::allocator<std::pair<int, int>>> make_pairs(Container<int, std::allocator<int> > data);
+
+
+		template <typename T, template <typename, typename> class Container>
+		std::pair<Container<int, std::allocator<int>>, Container<int, std::allocator<int>>> split_chain(Container<std::pair<int, int>, std::allocator<std::pair<int, int>>> data);
+
+		std::vector<int> merge(std::pair<std::vector<int>, std::vector<int>> data);
+		std::deque<int> merge(std::pair<std::deque<int>, std::deque<int>> data);
+
+		template <typename Container>
+		void insert_binary_search(Container& data, int value);
+
+		int generate_jakobstahl(int nth);
+
 	public:
 		PmergeMe();
-		PmergeMe(PmergeMe const &src);
+		PmergeMe(PmergeMe const &other);
+		PmergeMe &operator=(PmergeMe const &other);
+		std::vector<int> sort(std::vector<int> data);
+		std::deque<int> sort(std::deque<int> data);
+		double getLastBenchmark();
 		~PmergeMe();
-		PmergeMe &operator=(PmergeMe const &rhs);
-		T sort(T data); // returns the sorted data
-		std::chrono::duration<double, std::nano> get_last_bench(); // returns the time for the last sort
 };
