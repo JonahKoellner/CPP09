@@ -6,7 +6,7 @@
 /*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:20:54 by jkollner          #+#    #+#             */
-/*   Updated: 2024/03/08 10:10:22 by jonahkollne      ###   ########.fr       */
+/*   Updated: 2024/03/08 15:18:45 by jonahkollne      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,11 @@ int main(int argc, char **argv) {
 	PmergeMe p;
 	std::deque<int> sorted2 = p.sort(data2);
 	std::vector<int> sorted = p.sort(data);
+	for (size_t i = 0; i < sorted2.size(); i++)
+		std::cout << sorted2[i] << " ";
+	std::cout << std::endl;
+	for (size_t i = 0; i < sorted.size(); i++)
+		std::cout << sorted[i] << " ";
+	std::cout << std::endl;
 	return 0;
 }

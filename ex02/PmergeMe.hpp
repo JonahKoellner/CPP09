@@ -6,7 +6,7 @@
 /*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:16:17 by jonahkollne       #+#    #+#             */
-/*   Updated: 2024/03/08 10:01:03 by jonahkollne      ###   ########.fr       */
+/*   Updated: 2024/03/08 14:02:42 by jonahkollne      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,14 @@ class PmergeMe {
 		template <typename T, template <typename, typename> class Container>
 		std::pair<Container<int, std::allocator<int> >, Container<int, std::allocator<int> > > _split_chain(Container<std::pair<int, int>, std::allocator<std::pair<int, int> > > data);
 
-		std::vector<int> _merge(std::pair<std::vector<int>, std::vector<int> > data);
-		std::deque<int> _merge(std::pair<std::deque<int>, std::deque<int> > data);
+		std::vector<int> _merge(std::vector<int> main, std::vector<int> pend);
+		std::deque<int> _merge(std::deque<int> main, std::deque<int> pend);
+
+		template<typename Container>
+		Container _index_sequence(size_t size);
 
 		template <typename Container>
 		void _insert_binary_search(Container& data, int value);
-
-		int _generate_jakobstahl(int nth);
 
 	public:
 		PmergeMe();
