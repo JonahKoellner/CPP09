@@ -6,7 +6,7 @@
 /*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:20:54 by jkollner          #+#    #+#             */
-/*   Updated: 2024/03/09 20:13:45 by jonahkollne      ###   ########.fr       */
+/*   Updated: 2024/03/09 20:20:34 by jonahkollne      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,22 @@ int main(int argc, char **argv) {
 		data.push_back(atoi(argv[i]));
 		data2.push_back(atoi(argv[i]));
 	}
+	std::cout << "Before: ";
+	for (size_t i = 0; i < data.size(); i++)
+		std::cout << data[i] << " ";
+	std::cout << std::endl;
 	PmergeMe p;
 	std::vector<int> sorted = p.sort(data);
-	std::cout << "time taken: " << p.getLastBenchmark() << "microseconds vector" << std::endl;
+	double vec_bench = p.getLastBenchmark();
 	std::deque<int> sorted2 = p.sort(data2);
-	std::cout << "time taken: " << p.getLastBenchmark() << "microseconds deque" << std::endl;
-	//std::cout << "data.size(): " << data.size() << std::endl;
-	//std::cout << "data2.size(): " << data2.size() << std::endl;
+	double deq_bench = p.getLastBenchmark();
+	std::cout << "After: ";
+	for (size_t i = 0; i < sorted.size(); i++)
+		std::cout << sorted[i] << " ";
+	std::cout << std::endl;
+	std::cout << "TIme to process a range of " << data.size() << " elements with std::vector:\t" << vec_bench << " microseconds" << std::endl;
+
+	std::cout << "TIme to process a range of " << data.size() << " elements with std::deque:\t" << deq_bench << " microseconds" << std::endl;
 	std::cout << "is_sorted(sorted): " << (is_sorted(sorted) ? "\033[1;32mIs sorted\033[0m" : "\033[1;31mNot sorted\033[0m" ) << std::endl;
 	std::cout << "is_sorted(sorted2): " << (is_sorted(sorted2) ? "\033[1;32mIs sorted\033[0m" : "\033[1;31mNot sorted\033[0m" ) << std::endl;
 	//for (size_t i = 0; i < sorted.size(); i++)
