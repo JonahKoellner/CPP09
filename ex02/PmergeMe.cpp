@@ -6,7 +6,7 @@
 /*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:30:29 by jonahkollne       #+#    #+#             */
-/*   Updated: 2024/03/09 11:06:58 by jonahkollne      ###   ########.fr       */
+/*   Updated: 2024/03/09 20:14:32 by jonahkollne      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ PmergeMe &PmergeMe::operator=(PmergeMe const &other) {
 }
 
 std::vector<int> PmergeMe::sort(std::vector<int> data) {
+	// start messurin time
+	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
 	if (data.size() < 2)
 		return (data);
 	int struggler = -1;
@@ -38,24 +41,21 @@ std::vector<int> PmergeMe::sort(std::vector<int> data) {
 	this->_sort_pairs(halves);
 	std::pair<std::vector<int, std::allocator<int> >, std::vector<int, std::allocator<int> > > splitted = this->_split_chain<std::vector<int, std::allocator<int> > >(halves);
 
-	std::cout << "struggler: " << struggler << std::endl;
-	for (size_t i = 0; i < splitted.first.size(); i++)
-		std::cout << "splitted.first[" << i << "]: " << splitted.first[i] << std::endl;
-	std::cout << std::endl;
-	for (size_t i = 0; i < splitted.second.size(); i++)
-		std::cout << "splitted.second[" << i << "]: " << splitted.second[i] << std::endl;
-
 
 	data = this->_merge(splitted.first, splitted.second);
 	//// if there was a struggler, put it back in
 	if (struggler != -1)
 		this->_insert_binary_search(data, struggler);
+
+	// finish messurin time
+	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+	this->_benchmark = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
 	return (data);
 }
 
 std::deque<int> PmergeMe::sort(std::deque<int> data) {
-	//if (safeguard_catch(data)) // if its an "error" where i just dont have anything to sort return 1; if its a real error throw an exception
-	//	return (data);
+	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
 	if (data.size() < 2)
 		return (data);
 	int struggler = -1;
@@ -82,6 +82,9 @@ std::deque<int> PmergeMe::sort(std::deque<int> data) {
 	//// if there was a struggler, put it back in
 	if (struggler != -1)
 		this->_insert_binary_search(data, struggler);
+
+	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+	this->_benchmark = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
 	return (data);
 }
 
