@@ -6,7 +6,7 @@
 /*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:30:29 by jonahkollne       #+#    #+#             */
-/*   Updated: 2024/03/08 15:18:34 by jonahkollne      ###   ########.fr       */
+/*   Updated: 2024/03/09 11:06:58 by jonahkollne      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,13 @@ std::vector<int> PmergeMe::sort(std::vector<int> data) {
 	this->_sort_pairs(halves);
 	std::pair<std::vector<int, std::allocator<int> >, std::vector<int, std::allocator<int> > > splitted = this->_split_chain<std::vector<int, std::allocator<int> > >(halves);
 
-	//// DEBUGGING LOGGING
+	std::cout << "struggler: " << struggler << std::endl;
+	for (size_t i = 0; i < splitted.first.size(); i++)
+		std::cout << "splitted.first[" << i << "]: " << splitted.first[i] << std::endl;
+	std::cout << std::endl;
+	for (size_t i = 0; i < splitted.second.size(); i++)
+		std::cout << "splitted.second[" << i << "]: " << splitted.second[i] << std::endl;
 
-	//std::cout << "struggler: " << struggler << std::endl;
-	//for (size_t i = 0; i < splitted.first.size(); i++)
-	//	std::cout << "splitted.first[" << i << "]: " << splitted.first[i] << std::endl;
-	//std::cout << std::endl;
-	//for (size_t i = 0; i < splitted.second.size(); i++)
-	//	std::cout << "splitted.second[" << i << "]: " << splitted.second[i] << std::endl;
-
-	///// END
 
 	data = this->_merge(splitted.first, splitted.second);
 	//// if there was a struggler, put it back in
@@ -122,6 +119,7 @@ std::pair<Container<int, std::allocator<int> >, Container<int, std::allocator<in
 	if (data[0].first > data[0].second) {
 		main.push_back(data[0].second);
 		main.push_back(data[0].first);
+		pend.push_back(data[0].second);
 		count++;
 	}
 	for (; count < data.size(); count++) {
@@ -134,9 +132,11 @@ std::pair<Container<int, std::allocator<int> >, Container<int, std::allocator<in
 }
 
 std::vector<int> PmergeMe::_merge(std::vector<int> main, std::vector<int> pend) {
-	const std::vector<int> _index_sequence = this->_index_sequence<std::vector<int> >(pend.size());
+	const std::vector<int> _index_sequence = this->_index_sequence<std::vector<int> >(pend.size() + main.size());
 
+	//std::cout << "merging index_sequence size " << _index_sequence.size() << std::endl;
 	for (size_t i = 0; i < _index_sequence.size(); i++) {
+		//std::cout << "index_sequence[" << i << "]: " << _index_sequence[i] << " pend.size() " << pend.size() << std::endl;
 		if (_index_sequence[i] < (int)pend.size())
 			this->_insert_binary_search(main, pend[_index_sequence[i]]);
 	}
@@ -144,7 +144,7 @@ std::vector<int> PmergeMe::_merge(std::vector<int> main, std::vector<int> pend) 
 }
 
 std::deque<int> PmergeMe::_merge(std::deque<int> main, std::deque<int> pend) {
-	const std::deque<int> _index_sequence = this->_index_sequence<std::deque<int> >(pend.size());
+	const std::deque<int> _index_sequence = this->_index_sequence<std::deque<int> >(pend.size() + main.size());
 
 	for (size_t i = 0; i < _index_sequence.size(); i++) {
 		if (_index_sequence[i] < (int)pend.size())
@@ -170,6 +170,8 @@ Container PmergeMe::_index_sequence(size_t size) {
 		for (int number = jacob[i] - 1; number > lastJacob; number--) {
 			sequence.push_back(number);
 		}
+		if (sequence.size() >= size)
+			break;
 		lastJacob = jacob[i];
     }
 
