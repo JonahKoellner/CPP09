@@ -6,7 +6,7 @@
 /*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:20:54 by jkollner          #+#    #+#             */
-/*   Updated: 2024/03/09 20:20:34 by jonahkollne      ###   ########.fr       */
+/*   Updated: 2024/03/10 17:41:50 by jonahkollne      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int main(int argc, char **argv) {
 	std::vector<int> data;
 	std::deque<int> data2;
 	for (int i = 1; i < argc; i++) {
-		//std::cout << "pushing item nr." << i << " : " << argv[i] << std::endl;
 		data.push_back(atoi(argv[i]));
 		data2.push_back(atoi(argv[i]));
 	}
@@ -48,13 +47,8 @@ int main(int argc, char **argv) {
 	std::cout << "TIme to process a range of " << data.size() << " elements with std::vector:\t" << vec_bench << " microseconds" << std::endl;
 
 	std::cout << "TIme to process a range of " << data.size() << " elements with std::deque:\t" << deq_bench << " microseconds" << std::endl;
+
 	std::cout << "is_sorted(sorted): " << (is_sorted(sorted) ? "\033[1;32mIs sorted\033[0m" : "\033[1;31mNot sorted\033[0m" ) << std::endl;
 	std::cout << "is_sorted(sorted2): " << (is_sorted(sorted2) ? "\033[1;32mIs sorted\033[0m" : "\033[1;31mNot sorted\033[0m" ) << std::endl;
-	//for (size_t i = 0; i < sorted.size(); i++)
-	//	std::cout << sorted[i] << " ";
-	//std::cout << std::endl;
-	//for (size_t i = 0; i < sorted2.size(); i++)
-	//	std::cout << sorted2[i] << " ";
-	//std::cout << std::endl;
 	return 0;
 }
