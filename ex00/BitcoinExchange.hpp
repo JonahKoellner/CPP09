@@ -6,7 +6,7 @@
 /*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 12:10:08 by jkollner          #+#    #+#             */
-/*   Updated: 2024/03/05 18:08:37 by jonahkollne      ###   ########.fr       */
+/*   Updated: 2024/03/10 17:24:50 by jonahkollne      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,6 @@ class BitcoinExchange {
 		double getExchangeRate(std::string data_line);
 		std::pair<double, double> getExchangeValue(std::string data_line);
 		~BitcoinExchange();
-
-		class InvalidDateException : public std::exception {
-			private:
-				char *date;
-			public:
-				InvalidDateException(char * date);
-				virtual const char *what() const throw();
-				//virtual ~InvalidDateException() throw();
-		};
 
 		class NegativeNumber : public std::exception {
 			public:

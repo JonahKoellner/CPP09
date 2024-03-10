@@ -6,7 +6,7 @@
 /*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:17:21 by jonahkollne       #+#    #+#             */
-/*   Updated: 2024/03/05 19:24:33 by jonahkollne      ###   ########.fr       */
+/*   Updated: 2024/03/10 17:27:20 by jonahkollne      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,13 @@ bool BitcoinExchange::isValidDate(std::string date) {
 
 	try {
 		int year = std::stoi(date.substr(0, 4));
-		year = year + 1; // -Werror unused variable
 		int month = std::stoi(date.substr(5, 2));
 		int day = std::stoi(date.substr(8, 2));
 
 
 		const int month_days[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-		//std::cout << "year: " << year << " month: " << month << " day: " << day << std::endl;
-
-		if (month < 1 || month > 12 || day < 1 || day > month_days[month - 1]) {
+		if (year < 1 || month < 1 || month > 12 || day < 1 || day > month_days[month - 1]) {
 			return false;
 		}
 	} catch (std::exception &e) {
@@ -65,12 +62,9 @@ std::pair<std::string, double> BitcoinExchange::isValidData(std::string data_lin
 	}
 	std::string date = data_line.substr(0, del_pos);
 	std::string value = data_line.substr(del_pos + 1);
-	//std::cout << (isValidDate(date) == false ? "false" : "true") << std::endl;
 	if (isValidDate(date) == false) {
-		//std::cout << data_line << " / " << date << " / " << value << std::endl;
-		//throw InvalidDateException((char *)date.c_str());
 		throw std::runtime_error("Error: bad input => " + date);
-		//std::cout << "message" << std::endl;
+
 	}
 
 	// check if value is number
@@ -110,7 +104,6 @@ std::map<std::string, double> BitcoinExchange::readDatabase(std::string database
 		}
 
 	}
-	std::cout << "Done reading" << std::endl;
 	// return the exchange rate map
 	return (db_content);
 }
@@ -145,17 +138,6 @@ std::pair<double, double> BitcoinExchange::getExchangeValue(std::string data_lin
 	// return the amount and the value
 	return std::make_pair(value.second, rate);
 }
-
-BitcoinExchange::InvalidDateException::InvalidDateException(char * date) {
-	//this->date = (char *)("Error: bad input => " + std::string(date)).c_str();
-	this->date = date;
-}
-
-const char *BitcoinExchange::InvalidDateException::what() const throw() {
-	return (date);
-}
-
-//BitcoinExchange::InvalidDateException::~InvalidDateException() throw() {}
 
 const char *BitcoinExchange::NegativeNumber::what() const throw() {
 	return ("Error: Negative number");
