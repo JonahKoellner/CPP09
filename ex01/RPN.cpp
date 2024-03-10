@@ -6,7 +6,7 @@
 /*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:07:43 by jonahkollne       #+#    #+#             */
-/*   Updated: 2024/03/05 21:21:19 by jonahkollne      ###   ########.fr       */
+/*   Updated: 2024/03/10 17:33:08 by jonahkollne      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void RPN::calculate(std::string str) {
 			else if (token == "*") _stack.push(num1 * num2);
 			else if (token == "/") _stack.push(num1 / (num2 == 0 ? throw std::runtime_error("zero div") : num2));
 			else throw std::runtime_error("Token not recognized");
-			//std::cout << num1 << " " << token << " " << num2 << " = " << _stack.top() << std::endl;
 		}
 	}
 
@@ -66,7 +65,5 @@ void RPN::calculate(std::string str) {
 	int result = _stack.top(); _stack.pop();
 	std::cout << result << std::endl;
 }
-
-
 
 RPN::~RPN() {}
