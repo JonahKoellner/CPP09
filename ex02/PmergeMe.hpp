@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
+/*   By: jkollner <jkollner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:16:17 by jonahkollne       #+#    #+#             */
-/*   Updated: 2024/03/08 14:02:42 by jonahkollne      ###   ########.fr       */
+/*   Updated: 2024/03/11 08:11:08 by jkollner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <vector>
 #include <deque>
 
-#include <iostream> // remove this after debugging
+#include <chrono>
 
 class PmergeMe {
 	private:
