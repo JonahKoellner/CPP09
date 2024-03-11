@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
+/*   By: jkollner <jkollner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 12:10:08 by jkollner          #+#    #+#             */
-/*   Updated: 2024/03/10 17:24:50 by jonahkollne      ###   ########.fr       */
+/*   Updated: 2024/03/11 12:23:30 by jkollner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <map>
 #include <string>
 #include <fstream>
-
+#include <sstream>
 #include <iostream>
 
 class BitcoinExchange {
@@ -25,6 +25,8 @@ class BitcoinExchange {
 		std::pair<std::string, double> isValidData(std::string data_line, char delimiter); // returns a pair of the currency and the exchange rate or throws exception
 		std::map<std::string, double> readDatabase(std::string database_file);
 
+		template< typename T >
+		T stot(const std::string & str);
 	public:
 		BitcoinExchange();
 		BitcoinExchange(std::string database_file);

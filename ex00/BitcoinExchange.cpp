@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
+/*   By: jkollner <jkollner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:17:21 by jonahkollne       #+#    #+#             */
-/*   Updated: 2024/03/10 17:27:20 by jonahkollne      ###   ########.fr       */
+/*   Updated: 2024/03/11 12:29:10 by jkollner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,9 @@ bool BitcoinExchange::isValidDate(std::string date) {
 	}
 
 	try {
-		int year = std::stoi(date.substr(0, 4));
-		int month = std::stoi(date.substr(5, 2));
-		int day = std::stoi(date.substr(8, 2));
-
+		int year = this->stot<int>(date.substr(0, 4));
+		int month = this->stot<int>(date.substr(5, 2));
+		int day = this->stot<int>(date.substr(8, 2));
 
 		const int month_days[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
@@ -70,7 +69,7 @@ std::pair<std::string, double> BitcoinExchange::isValidData(std::string data_lin
 	// check if value is number
 	double value_num;
 	try {
-		value_num = std::stod(value);
+		value_num = this->stot<double>(value);
 	} catch (std::exception &e) {
 		throw NoNumber();
 	}
@@ -84,8 +83,9 @@ std::map<std::string, double> BitcoinExchange::readDatabase(std::string database
 	std::map<std::string, double> db_content;
 
 	// open file and thorw exception if it fails
-	std::ifstream file(database_file);
-	if (!file) {
+	std::fstream file;
+	file.open(database_file.c_str());
+	if (file.fail()) {
 		throw std::runtime_error("Error: could not open file");
 	}
 
@@ -137,6 +137,15 @@ std::pair<double, double> BitcoinExchange::getExchangeValue(std::string data_lin
 
 	// return the amount and the value
 	return std::make_pair(value.second, rate);
+}
+
+template< typename T >
+T BitcoinExchange::stot(const std::string & str) {
+	std::stringstream ss(str);
+	T f;
+	ss >> f;
+	// Check if the entire string was consumed and if there's no error
+	return (f);
 }
 
 const char *BitcoinExchange::NegativeNumber::what() const throw() {
