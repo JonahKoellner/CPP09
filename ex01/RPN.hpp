@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RPN.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
+/*   By: jkollner <jkollner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 19:27:22 by jonahkollne       #+#    #+#             */
-/*   Updated: 2024/03/05 20:52:09 by jonahkollne      ###   ########.fr       */
+/*   Updated: 2024/03/11 12:34:00 by jkollner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@
 
 class RPN {
 	private:
-		std::stack<int> _stack;
+		std::stack<double> _stack;
+
+		template< typename T >
+		T stot(const std::string & str);
 
 	public:
 		RPN();

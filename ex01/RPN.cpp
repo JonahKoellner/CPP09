@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RPN.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
+/*   By: jkollner <jkollner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:07:43 by jonahkollne       #+#    #+#             */
-/*   Updated: 2024/03/10 17:33:08 by jonahkollne      ###   ########.fr       */
+/*   Updated: 2024/03/11 12:35:47 by jkollner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void RPN::calculate(std::string str) {
 	std::string token;
 	while (std::getline(ss, token, ' ')) {
 		if (isNumber(token)) {
-			_stack.push(std::stoi(token));
+			_stack.push(this->stot<double>(token));
 		} else {
 			// If the token is an operator, pop two numbers from the stack,
 			// perform the operation, and push the result back onto the stack
@@ -49,8 +49,8 @@ void RPN::calculate(std::string str) {
 			if (_stack.size() < 2)
 				throw std::runtime_error("operands amount for operator error");
 
-			int num2 = _stack.top(); _stack.pop();
-			int num1 = _stack.top(); _stack.pop();
+			double num2 = _stack.top(); _stack.pop();
+			double num1 = _stack.top(); _stack.pop();
 			if (token == "+") _stack.push(num1 + num2);
 			else if (token == "-") _stack.push(num1 - num2);
 			else if (token == "*") _stack.push(num1 * num2);
@@ -62,8 +62,17 @@ void RPN::calculate(std::string str) {
 	if (_stack.size() != 1)
 		throw std::runtime_error("Counting Error");
 	// The last item on the stack is the result
-	int result = _stack.top(); _stack.pop();
+	double result = _stack.top(); _stack.pop();
 	std::cout << result << std::endl;
+}
+
+template< typename T >
+T RPN::stot(const std::string & str) {
+	std::stringstream ss(str);
+	T f;
+	ss >> f;
+
+	return (f);
 }
 
 RPN::~RPN() {}
