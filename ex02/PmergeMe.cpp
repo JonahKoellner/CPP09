@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonahkollner <jonahkollner@student.42.f    +#+  +:+       +#+        */
+/*   By: jkollner <jkollner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:30:29 by jonahkollne       #+#    #+#             */
-/*   Updated: 2024/03/10 17:37:06 by jonahkollne      ###   ########.fr       */
+/*   Updated: 2024/03/11 12:56:48 by jkollner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 
 PmergeMe::PmergeMe() {
-	_benchmark = 0;
 }
 
 PmergeMe::PmergeMe(PmergeMe const &other) {
@@ -22,13 +21,11 @@ PmergeMe::PmergeMe(PmergeMe const &other) {
 }
 
 PmergeMe &PmergeMe::operator=(PmergeMe const &other) {
-	_benchmark = other._benchmark;
+	(void)other;
 	return *this;
 }
 
 std::vector<int> PmergeMe::sort(std::vector<int> data) {
-	// start messurin time
-	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
 	if (data.size() < 2)
 		return (data);
@@ -47,14 +44,10 @@ std::vector<int> PmergeMe::sort(std::vector<int> data) {
 	if (struggler != -1)
 		this->_insert_binary_search(data, struggler);
 
-	// finish messurin time
-	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-	this->_benchmark = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
 	return (data);
 }
 
 std::deque<int> PmergeMe::sort(std::deque<int> data) {
-	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
 	if (data.size() < 2)
 		return (data);
@@ -72,20 +65,14 @@ std::deque<int> PmergeMe::sort(std::deque<int> data) {
 	if (struggler != -1)
 		this->_insert_binary_search(data, struggler);
 
-	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-	this->_benchmark = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
 	return (data);
-}
-
-double PmergeMe::getLastBenchmark() {
-	return _benchmark;
 }
 
 template <typename T, template <typename, typename> class Container>
 Container<std::pair<int, int>, std::allocator<std::pair<int, int> > > PmergeMe::_make_pairs(Container<int, std::allocator<int> > data) {
 	Container<std::pair<int, int>, std::allocator<std::pair<int, int> > > pairs;
 	int greater, less;
-	for (size_t i = 0; i < data.size(); i += 2) {
+	for (std::size_t i = 0; i < data.size(); i += 2) {
 		less = (data[i] > data[i + 1]) ? data[i + 1] : data[i];
 		greater = (data[i] > data[i + 1]) ? data[i] : data[i + 1];
 		pairs.push_back(std::make_pair(greater, less));
@@ -106,7 +93,7 @@ template <typename T, template <typename, typename> class Container>
 std::pair<Container<int, std::allocator<int> >, Container<int, std::allocator<int> > > PmergeMe::_split_chain(Container<std::pair<int, int>, std::allocator<std::pair<int, int> > > data) {
 	Container<int, std::allocator<int> > main;
 	Container<int, std::allocator<int> > pend;
-	size_t count = 0;
+	std::size_t count = 0;
 	if (data[0].first > data[0].second) {
 		main.push_back(data[0].second);
 		main.push_back(data[0].first);
@@ -123,7 +110,7 @@ std::pair<Container<int, std::allocator<int> >, Container<int, std::allocator<in
 std::vector<int> PmergeMe::_merge(std::vector<int> main, std::vector<int> pend) {
 	const std::vector<int> _index_sequence = this->_index_sequence<std::vector<int> >(pend.size() + main.size());
 
-	for (size_t i = 0; i < _index_sequence.size(); i++) {
+	for (std::size_t i = 0; i < _index_sequence.size(); i++) {
 		if (_index_sequence[i] < (int)pend.size())
 			this->_insert_binary_search(main, pend[_index_sequence[i]]);
 	}
@@ -133,7 +120,7 @@ std::vector<int> PmergeMe::_merge(std::vector<int> main, std::vector<int> pend) 
 std::deque<int> PmergeMe::_merge(std::deque<int> main, std::deque<int> pend) {
 	const std::deque<int> _index_sequence = this->_index_sequence<std::deque<int> >(pend.size() + main.size());
 
-	for (size_t i = 0; i < _index_sequence.size(); i++) {
+	for (std::size_t i = 0; i < _index_sequence.size(); i++) {
 		if (_index_sequence[i] < (int)pend.size())
 			this->_insert_binary_search(main, pend[_index_sequence[i]]);
 	}
@@ -141,7 +128,7 @@ std::deque<int> PmergeMe::_merge(std::deque<int> main, std::deque<int> pend) {
 }
 
 template <typename Container>
-Container PmergeMe::_index_sequence(size_t size) {
+Container PmergeMe::_index_sequence(std::size_t size) {
 	Container sequence;
 	Container jacob(size);
 	 if (size > 0) {
@@ -151,7 +138,7 @@ Container PmergeMe::_index_sequence(size_t size) {
         jacob[1] = 1;
     }
 	int lastJacob = 2;
-    for (size_t i = 2; i < size; i++) {
+    for (std::size_t i = 2; i < size; i++) {
         jacob[i] = jacob[i - 1] + 2 * jacob[i - 2];
 		sequence.push_back(jacob[i]);
 		for (int number = jacob[i] - 1; number > lastJacob; number--) {
@@ -166,8 +153,6 @@ Container PmergeMe::_index_sequence(size_t size) {
 }
 template <typename Container>
 void PmergeMe::_insert_binary_search(Container& data, int value) {
-	(void)data;
-	(void)value;
 	typename Container::iterator it = std::lower_bound(data.begin(), data.end(), value);
 	data.insert(it, value);
 }

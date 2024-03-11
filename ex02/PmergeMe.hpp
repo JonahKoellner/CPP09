@@ -6,19 +6,17 @@
 /*   By: jkollner <jkollner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:16:17 by jonahkollne       #+#    #+#             */
-/*   Updated: 2024/03/11 08:11:08 by jkollner         ###   ########.fr       */
+/*   Updated: 2024/03/11 12:57:18 by jkollner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 #include <vector>
 #include <deque>
-
-#include <chrono>
+#include <algorithm>
 
 class PmergeMe {
 	private:
-		double _benchmark;
 
 		template <typename T, template <typename, typename> class Container>
 		Container<std::pair<int, int>, std::allocator<std::pair<int, int> > > _make_pairs(Container<int, std::allocator<int> > data);
@@ -33,7 +31,7 @@ class PmergeMe {
 		std::deque<int> _merge(std::deque<int> main, std::deque<int> pend);
 
 		template<typename Container>
-		Container _index_sequence(size_t size);
+		Container _index_sequence(std::size_t size);
 
 		template <typename Container>
 		void _insert_binary_search(Container& data, int value);
@@ -44,6 +42,5 @@ class PmergeMe {
 		PmergeMe &operator=(PmergeMe const &other);
 		std::vector<int> sort(std::vector<int> data);
 		std::deque<int> sort(std::deque<int> data);
-		double getLastBenchmark();
 		~PmergeMe();
 };
