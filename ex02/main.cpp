@@ -6,7 +6,7 @@
 /*   By: jkollner <jkollner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:20:54 by jkollner          #+#    #+#             */
-/*   Updated: 2024/03/11 08:30:46 by jkollner         ###   ########.fr       */
+/*   Updated: 2024/03/11 08:48:04 by jkollner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,19 @@ int main(int argc, char **argv) {
 	std::vector<int> data;
 	std::deque<int> data2;
 	for (int i = 1; i < argc; i++) {
-		double number = atof(argv[i]);
-		if (number > INT_MAX || number < INT_MIN) {
-			std::cerr << "Error: Number " << number << " is out of range" << std::endl;
-			return 1;
+		int number;
+		try {
+			number = std::stoi(argv[i]);
+		} catch (std::exception &e){
+			std::cout <<"Error: " <<  e.what() << std::endl;
+			return (1);
 		}
 		if (std::find(data.begin(), data.end(), number) != data.end()) {
 			std::cerr << "Error: Duplicate number " << number << std::endl;
 			return 1;
 		}
-		data.push_back((int)number);
-		data2.push_back((int)number);
+		data.push_back(number);
+		data2.push_back(number);
 	}
 	std::cout << "Before: ";
 	for (size_t i = 0; i < data.size(); i++)
